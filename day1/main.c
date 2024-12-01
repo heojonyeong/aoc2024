@@ -60,14 +60,28 @@ uint64_t part2(uint64_t* arr1, uint64_t* arr2, size_t arrSize)
     return score;
 }
 
+int compare_ull(const void* a, const void* b)
+{
+    unsigned long long a_typed = *((unsigned long*)a);
+    unsigned long long b_typed = *((unsigned long*)b);
+
+    if (a_typed < b_typed)
+    {
+        return 1;
+    }
+    if (a_typed > b_typed)
+    {
+        return -1;
+    }
+    return 0;
+}
+
 int main(int argc, char** argv)
 {
     clock_t start = clock();
     char* input = readInput("../day1/input.txt");
-
     const size_t BUF_SIZE = 10000;
     char* cur = input;
-
     size_t arrSize = 0;
     uint64_t* arr1 = malloc(sizeof(uint64_t)*BUF_SIZE);
     uint64_t* arr2 = malloc(sizeof(uint64_t)*BUF_SIZE);
@@ -81,8 +95,8 @@ int main(int argc, char** argv)
 
     free(input);
 
-    bubble_sort_ull(arr1, arrSize);
-    bubble_sort_ull(arr2, arrSize);
+    qsort(arr1, arrSize, sizeof(uint64_t), &compare_ull);
+    qsort(arr2, arrSize, sizeof(uint64_t), &compare_ull);
 
     uint64_t sum1 = part1(arr1, arr2, arrSize);
     uint64_t sum2 = part2(arr1, arr2, arrSize);
