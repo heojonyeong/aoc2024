@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <time.h>
 
 #include "util.h"
 
@@ -61,6 +62,7 @@ uint64_t part2(uint64_t* arr1, uint64_t* arr2, size_t arrSize)
 
 int main(int argc, char** argv)
 {
+    clock_t start = clock();
     char* input = readInput("../day1/input.txt");
 
     const size_t BUF_SIZE = 10000;
@@ -90,5 +92,8 @@ int main(int argc, char** argv)
     printf("Part2: %zu\n", sum2);
     free(arr1);
     free(arr2);
+    clock_t end = clock();
+    double time_used = ((double)(end-start))/CLOCKS_PER_SEC;
+    printf("Time used: %fms\n", time_used*1000);
     return 0;
 }
