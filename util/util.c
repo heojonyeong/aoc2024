@@ -74,3 +74,57 @@ void bubble_sort_ull(unsigned long long* array, size_t size)
 {
     bubble_sort(array, size, sizeof(unsigned long long), &less_ull, &swap_ull);
 }
+
+char** split_lines_in_place(char* input, size_t* size)
+{
+    size_t capacity = 16;
+    char** result = malloc(sizeof(char*)*capacity);
+
+    *size = 0;
+    char* cur = input;
+    char* start = input;
+
+    while(*cur != 0)
+    {
+        if (*cur == '\n')
+        {
+            if (*size >= capacity)
+            {
+                capacity *= 2;
+                result = realloc(result, sizeof(char*)*capacity);
+            }
+
+            *cur = 0;
+
+            result[*size] = start;
+            (*size)++;
+            start = cur+1;
+        }
+
+        cur++;
+    }
+
+    // add final line
+    if (*size >= capacity)
+    {
+        capacity *= 2;
+        result = realloc(result, sizeof(char*)*capacity);
+    }
+    result[*size] = start;
+    (*size)++;
+
+    return result;
+}
+
+int llsign(long long a)
+{
+    if (a > 0)
+    {
+        return 1;
+    }
+    if (a < 0)
+    {
+        return -1;
+    }
+    return 0;
+}
