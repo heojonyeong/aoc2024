@@ -45,15 +45,16 @@ bool checks_rules(struct IntArray const* nums, struct IntArray const* rules)
 {
     bool valid = true;
 
-    for(size_t i = 0; i<nums->size; i++)
+    /*
+    by induction it can be proven that for a sequence a_0...a_n
+    it is succifient to show that a_i is allowed to come before a_(i+1)
+    for all i in [0, n-1]
+    */
+    for(size_t i = 0; i<nums->size-1; i++)
     {
         const int num_to_check = nums->data[i];
 
-        for(size_t j = i+1; j<nums->size; j++)
-        {
-
-            valid = valid && int_array_contains(&rules[num_to_check], nums->data[j]);
-        }
+        valid = valid && int_array_contains(&rules[num_to_check], nums->data[i+1]);
     }
 
     return valid;
@@ -72,6 +73,46 @@ int part1(struct IntArray const* input, struct IntArray const* rules, size_t num
         if (checks_rules(&input[i], rules))
         {
             result += get_middle(&input[i]);
+        }
+    }
+
+    return result;
+}
+
+int compare(void* context, void const* a, void const* b)
+{
+    struct IntArray* rules = context;
+    int na = *((int*)a);
+    int nb = *((int*)b);
+
+    if (int_array_contains(&rules[na], nb))
+    {
+        return -1;
+    }
+    if (int_array_contains(&rules[nb], na))
+    {
+        return 1;
+    }
+
+    return 0;
+}
+
+int part2(struct IntArray const* input, struct IntArray* rules, size_t num_inputs)
+{
+    int result = 0;
+    for (size_t i = 0; i<num_inputs; i++)
+    {
+        if (!checks_rules(&input[i], rules))
+        {
+            int* tmp_array = malloc(sizeof(int)*input[i].size);
+            memcpy(tmp_array, input[i].data, sizeof(int)*input[i].size);
+            qsort_s(tmp_array, input[i].size, sizeof(int), compare, rules);
+
+            struct IntArray arr;
+            arr.data = tmp_array;
+            arr.size = input[i].size;
+            result += get_middle(&arr);
+            free(tmp_array);
         }
     }
 
@@ -108,10 +149,10 @@ int main(int argc, char** argv)
     build_rules(rules, rule_lines, num_rules);
 
     int res1 = part1(input_number_lists, rules, num_inputs);
-    //int res2 = part2(lines, line_length, num_lines);
+    int res2 = part2(input_number_lists, rules, num_inputs);
 
     printf("Part 1: %d\n", res1);
-    //printf("Part 2: %d\n", res2);
+    printf("Part 2: %d\n", res2);
 
     for (size_t i=0; i<num_inputs; i++)
     {
