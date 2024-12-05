@@ -128,3 +128,43 @@ int llsign(long long a)
     }
     return 0;
 }
+
+struct IntArray int_array_init()
+{
+    struct IntArray a;
+    a.capacity = 1;
+    a.size = 0;
+    a.data = malloc(sizeof(int));
+
+    return a;
+}
+
+void int_array_add(struct IntArray* arr, int n)
+{
+    if (arr->size >= arr->capacity)
+    {
+        arr->capacity *= 2;
+        arr->data = realloc(arr->data, sizeof(int)*arr->capacity);
+    }
+
+    arr->data[arr->size] = n;
+    arr->size++;
+}
+
+void int_array_free(struct IntArray* arr)
+{
+    free(arr->data);
+}
+
+bool int_array_contains(struct IntArray const* arr, int n)
+{
+    for (size_t i=0; i<arr->size; i++)
+    {
+        if (arr->data[i] == n)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
