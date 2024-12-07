@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <time.h>
 
 #include "util.h"
 
@@ -119,6 +120,7 @@ uint64_t part2(struct Sample const* samples, size_t num_samples)
 
 int main()
 {
+    clock_t start = clock();
     char* input = readInput("../day7/input.txt");
     size_t num_lines = 0;
     char** lines = split_lines_in_place(input, &num_lines);
@@ -138,6 +140,9 @@ int main()
         uint64_array_free(&samples[i].nums);
     }
     free(samples);
+    clock_t end = clock();
+    double time_used = ((double)(end-start))/CLOCKS_PER_SEC;
+    printf("Time used: %fms\n", time_used*1000);
 
     return 0;
 }

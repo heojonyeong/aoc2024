@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
 
 #include "util.h"
 
@@ -222,6 +223,7 @@ int part2(char** lines, size_t width, size_t height)
 
 int main()
 {
+    clock_t start = clock();
     char* input = readInput("../day6/input.txt");
     size_t height = 0;
     char** lines = split_lines_in_place(input, &height);
@@ -256,5 +258,9 @@ int main()
         free(lines2[i]);
     }
     free(lines2);
+    
+    clock_t end = clock();
+    double time_used = ((double)(end-start))/CLOCKS_PER_SEC;
+    printf("Time used: %fms\n", time_used*1000);
     return 0;
 }
