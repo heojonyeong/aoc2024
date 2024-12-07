@@ -171,12 +171,6 @@ int part2(char** lines, size_t width, size_t height)
 
     lines[start_y][start_x] = 0;
 
-    char* field = malloc(sizeof(char)*width*height);
-    for(size_t i = 0; i<height; i++)
-    {
-        memcpy(&field[i*width], lines[i], sizeof(char)*width);
-    }
-
     while(cur_x >= 0 && cur_x < width && cur_y >= 0 && cur_y < height)
     {
         size_t next_x = cur_x;
@@ -202,11 +196,14 @@ int part2(char** lines, size_t width, size_t height)
                 {
                     // check for loop
                     char* field_copy = malloc(sizeof(char)*width*height);
-                    memcpy(field_copy, field, sizeof(char)*width*height);
+                    for(size_t i = 0; i<height; i++)
+                    {
+                        memcpy(&field_copy[i*width], lines[i], sizeof(char)*width);
+                    }
 
                     field_copy[next_y*width + next_x] = '#';
 
-                    if (check_loop(field_copy, width, height, start_x, start_y, UP))
+                    if (check_loop(field_copy, width, height, cur_x, cur_y, dir))
                     {
                         result++;
                     }
@@ -220,7 +217,6 @@ int part2(char** lines, size_t width, size_t height)
         }
     }
 
-    free(field);
     return result;
 }
 
