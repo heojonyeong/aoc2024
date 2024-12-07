@@ -1,4 +1,5 @@
 #include <stdbool.h>
+#include <stdint.h>
 
 char* readInput(const char* path);
 
@@ -25,3 +26,15 @@ struct IntArray int_array_init();
 void int_array_add(struct IntArray* arr, int n);
 void int_array_free(struct IntArray* arr);
 bool int_array_contains(struct IntArray const* arr, int n);
+
+struct UInt64Array
+{
+    uint64_t* data;
+    size_t size;
+    size_t capacity;
+};
+
+struct UInt64Array uint64_array_init();
+void uint64_array_add(struct UInt64Array* arr, uint64_t n);
+void uint64_array_free(struct UInt64Array* arr);
+bool uint64_array_contains(struct UInt64Array const* arr, uint64_t n);

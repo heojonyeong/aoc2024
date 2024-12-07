@@ -168,3 +168,43 @@ bool int_array_contains(struct IntArray const* arr, int n)
 
     return false;
 }
+
+struct UInt64Array uint64_array_init()
+{
+    struct UInt64Array a;
+    a.capacity = 1;
+    a.size = 0;
+    a.data = malloc(sizeof(uint64_t));
+
+    return a;
+}
+
+void uint64_array_add(struct UInt64Array* arr, uint64_t n)
+{
+    if (arr->size >= arr->capacity)
+    {
+        arr->capacity *= 2;
+        arr->data = realloc(arr->data, sizeof(uint64_t)*arr->capacity);
+    }
+
+    arr->data[arr->size] = n;
+    arr->size++;
+}
+
+void uint64_array_free(struct UInt64Array* arr)
+{
+    free(arr->data);
+}
+
+bool uint64_array_contains(struct UInt64Array const* arr, uint64_t n)
+{
+    for (size_t i=0; i<arr->size; i++)
+    {
+        if (arr->data[i] == n)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
