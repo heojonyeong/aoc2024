@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
 
 #include "util.h"
 
@@ -121,6 +122,7 @@ int part2(struct IntArray const* input, struct IntArray* rules, size_t num_input
 
 int main()
 {
+    clock_t start = clock();
     char* input = readInput("../day5/input.txt");
     size_t num_lines = 0;
     char** lines = split_lines_in_place(input, &num_lines);
@@ -168,5 +170,8 @@ int main()
 
     free(lines);
     free(input);
+    clock_t end = clock();
+    double time_used = ((double)(end-start))/CLOCKS_PER_SEC;
+    printf("Time used: %fms\n", time_used*1000);
     return 0;
 }
