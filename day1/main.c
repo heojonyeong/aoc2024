@@ -76,7 +76,7 @@ int compare_ull(const void* a, const void* b)
     return 0;
 }
 
-int main(int argc, char** argv)
+int main()
 {
     clock_t start = clock();
     char* input = readInput("../day1/input.txt");

@@ -17,7 +17,7 @@ struct Sample* build_struct(char* const* lines, size_t num_lines)
     for (size_t i=0; i<num_lines; i++)
     {
         struct Sample s;
-        s.nums = uint64_array_init();
+        s.nums = UInt64_array_init();
 
         char* end_ptr = lines[i];
         s.target = strtoull(lines[i], &end_ptr, 10);
@@ -26,7 +26,7 @@ struct Sample* build_struct(char* const* lines, size_t num_lines)
 
         while(*end_ptr != 0)
         {
-            uint64_array_add(&s.nums, strtoull(end_ptr, &end_ptr, 10));
+            UInt64_array_add(&s.nums, strtoull(end_ptr, &end_ptr, 10));
         }
 
         result[i] = s;
@@ -137,7 +137,7 @@ int main()
 
     for (size_t i=0; i<num_lines; i++)
     {
-        uint64_array_free(&samples[i].nums);
+        UInt64_array_free(&samples[i].nums);
     }
     free(samples);
     clock_t end = clock();

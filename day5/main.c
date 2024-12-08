@@ -10,12 +10,12 @@ struct IntArray* to_numbers(char** input, size_t size)
 
     for(size_t i = 0; i<size; i++)
     {
-        struct IntArray nums = int_array_init();
+        struct IntArray nums = Int_array_init();
         char* end_ptr = input[i];
         while(*end_ptr != 0)
         {
             int n = strtol(end_ptr, &end_ptr, 10);
-            int_array_add(&nums, n);
+            Int_array_add(&nums, n);
             if (*end_ptr == ',')
             {
                 end_ptr++;
@@ -37,7 +37,7 @@ void build_rules(struct IntArray* rules, char** rule_lines, size_t num_rules)
         end_ptr++;
         int b = strtol(end_ptr, NULL, 10);
 
-        int_array_add(&rules[a], b);
+        Int_array_add(&rules[a], b);
     }
 }
 
@@ -54,7 +54,7 @@ bool checks_rules(struct IntArray const* nums, struct IntArray const* rules)
     {
         const int num_to_check = nums->data[i];
 
-        valid = valid && int_array_contains(&rules[num_to_check], nums->data[i+1]);
+        valid = valid && Int_array_contains(&rules[num_to_check], nums->data[i+1]);
     }
 
     return valid;
@@ -85,11 +85,11 @@ int compare(void* context, void const* a, void const* b)
     int na = *((int*)a);
     int nb = *((int*)b);
 
-    if (int_array_contains(&rules[na], nb))
+    if (Int_array_contains(&rules[na], nb))
     {
         return -1;
     }
-    if (int_array_contains(&rules[nb], na))
+    if (Int_array_contains(&rules[nb], na))
     {
         return 1;
     }
@@ -119,7 +119,7 @@ int part2(struct IntArray const* input, struct IntArray* rules, size_t num_input
     return result;
 }
 
-int main(int argc, char** argv)
+int main()
 {
     char* input = readInput("../day5/input.txt");
     size_t num_lines = 0;
@@ -142,7 +142,7 @@ int main(int argc, char** argv)
     struct IntArray* rules = malloc(sizeof(struct IntArray)*MAX_PAGE_NUMBER);
     for (size_t i = 0; i<MAX_PAGE_NUMBER; i++)
     {
-        struct IntArray r = int_array_init();
+        struct IntArray r = Int_array_init();
         rules[i] = r;
     }
 
@@ -156,13 +156,13 @@ int main(int argc, char** argv)
 
     for (size_t i=0; i<num_inputs; i++)
     {
-        int_array_free(&input_number_lists[i]);
+        Int_array_free(&input_number_lists[i]);
     }
     free(input_number_lists);
 
     for(size_t i=0; i<MAX_PAGE_NUMBER; i++)
     {
-        int_array_free(&rules[i]);
+        Int_array_free(&rules[i]);
     }
     free(rules);
 

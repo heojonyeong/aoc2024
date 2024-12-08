@@ -230,7 +230,7 @@ int calc(const char* input, bool part2)
     return result;
 }
 
-int main(int argc, char** argv)
+int main()
 {
     char* input = readInput("../day3/input.txt");
 

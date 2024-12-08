@@ -3,6 +3,48 @@
 
 #include "util.h"
 
+#define DEFINE_ARRAY(NAME, TYPE) \
+\
+struct NAME##Array NAME##_array_init()\
+{\
+    struct NAME##Array a;\
+    a.capacity = 1;\
+    a.size = 0;\
+    a.data = malloc(sizeof(TYPE));\
+\
+    return a;\
+}\
+\
+void NAME##_array_add(struct NAME##Array* arr, TYPE n)\
+{\
+    if (arr->size >= arr->capacity)\
+    {\
+        arr->capacity *= 2;\
+        arr->data = realloc(arr->data, sizeof(TYPE)*arr->capacity);\
+    }\
+\
+    arr->data[arr->size] = n;\
+    arr->size++;\
+}\
+\
+void NAME##_array_free(struct NAME##Array* arr)\
+{\
+    free(arr->data);\
+}\
+\
+bool NAME##_array_contains(struct NAME##Array const* arr, TYPE n)\
+{\
+    for (size_t i=0; i<arr->size; i++)\
+    {\
+        if (arr->data[i] == n)\
+        {\
+            return true;\
+        }\
+    }\
+\
+    return false;\
+}
+
 char* readInput(const char* path)
 {
     FILE* f = fopen(path, "r");
@@ -129,82 +171,5 @@ int llsign(long long a)
     return 0;
 }
 
-struct IntArray int_array_init()
-{
-    struct IntArray a;
-    a.capacity = 1;
-    a.size = 0;
-    a.data = malloc(sizeof(int));
-
-    return a;
-}
-
-void int_array_add(struct IntArray* arr, int n)
-{
-    if (arr->size >= arr->capacity)
-    {
-        arr->capacity *= 2;
-        arr->data = realloc(arr->data, sizeof(int)*arr->capacity);
-    }
-
-    arr->data[arr->size] = n;
-    arr->size++;
-}
-
-void int_array_free(struct IntArray* arr)
-{
-    free(arr->data);
-}
-
-bool int_array_contains(struct IntArray const* arr, int n)
-{
-    for (size_t i=0; i<arr->size; i++)
-    {
-        if (arr->data[i] == n)
-        {
-            return true;
-        }
-    }
-
-    return false;
-}
-
-struct UInt64Array uint64_array_init()
-{
-    struct UInt64Array a;
-    a.capacity = 1;
-    a.size = 0;
-    a.data = malloc(sizeof(uint64_t));
-
-    return a;
-}
-
-void uint64_array_add(struct UInt64Array* arr, uint64_t n)
-{
-    if (arr->size >= arr->capacity)
-    {
-        arr->capacity *= 2;
-        arr->data = realloc(arr->data, sizeof(uint64_t)*arr->capacity);
-    }
-
-    arr->data[arr->size] = n;
-    arr->size++;
-}
-
-void uint64_array_free(struct UInt64Array* arr)
-{
-    free(arr->data);
-}
-
-bool uint64_array_contains(struct UInt64Array const* arr, uint64_t n)
-{
-    for (size_t i=0; i<arr->size; i++)
-    {
-        if (arr->data[i] == n)
-        {
-            return true;
-        }
-    }
-
-    return false;
-}
+DEFINE_ARRAY(Int, int)
+DEFINE_ARRAY(UInt64, uint64_t)

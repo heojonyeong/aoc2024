@@ -169,7 +169,7 @@ int part2(char* const* lines, size_t width, size_t height)
     return count;
 }
 
-int main(int argc, char** argv)
+int main()
 {
     char* input = readInput("../day4/input.txt");
     size_t num_lines = 0;

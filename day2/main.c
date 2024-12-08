@@ -132,7 +132,7 @@ int part2(char** const lines, size_t num_lines)
    return result;
 }
 
-int main(int argc, char** argv)
+int main()
 {
     char* input = readInput("../day2/sample.txt");
 
