@@ -134,7 +134,7 @@ int part2(char** const lines, size_t num_lines)
 
 int main()
 {
-    char* input = readInput("../day2/sample.txt");
+    char* input = readInput("../day2/message.txt");
 
     size_t num_lines = 0;
     char** lines = split_lines_in_place(input, &num_lines);

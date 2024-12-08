@@ -36,3 +36,4 @@ int llsign(long long a);
 
 DECLARE_ARRAY(Int, int)
 DECLARE_ARRAY(UInt64, uint64_t)
+DECLARE_ARRAY(Pos2DInt, Pos2DInt)

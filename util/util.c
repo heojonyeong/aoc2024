@@ -36,7 +36,7 @@ bool NAME##_array_contains(struct NAME##Array const* arr, TYPE n)\
 {\
     for (size_t i=0; i<arr->size; i++)\
     {\
-        if (arr->data[i] == n)\
+        if (NAME##_compare(&(arr->data[i]), &n))\
         {\
             return true;\
         }\
@@ -171,5 +171,22 @@ int llsign(long long a)
     return 0;
 }
 
+static inline bool Int_compare(int const* a, int const* b)
+{
+    return *a == *b;
+}
+
+static inline bool UInt64_compare(uint64_t const* a, uint64_t const* b)
+{
+    return *a == *b;
+}
+
+static inline bool Pos2DInt_compare(Pos2DInt const* a, Pos2DInt const* b)
+{
+    return (a->x == b->x) &&
+           (a->y == b->y);
+}
+
 DEFINE_ARRAY(Int, int)
 DEFINE_ARRAY(UInt64, uint64_t)
+DEFINE_ARRAY(Pos2DInt, Pos2DInt)
