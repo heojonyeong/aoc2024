@@ -3,48 +3,6 @@
 
 #include "util.h"
 
-#define DEFINE_ARRAY(NAME, TYPE) \
-\
-struct NAME##Array NAME##_array_init()\
-{\
-    struct NAME##Array a;\
-    a.capacity = 1;\
-    a.size = 0;\
-    a.data = malloc(sizeof(TYPE));\
-\
-    return a;\
-}\
-\
-void NAME##_array_add(struct NAME##Array* arr, TYPE n)\
-{\
-    if (arr->size >= arr->capacity)\
-    {\
-        arr->capacity *= 2;\
-        arr->data = realloc(arr->data, sizeof(TYPE)*arr->capacity);\
-    }\
-\
-    arr->data[arr->size] = n;\
-    arr->size++;\
-}\
-\
-void NAME##_array_free(struct NAME##Array* arr)\
-{\
-    free(arr->data);\
-}\
-\
-bool NAME##_array_contains(struct NAME##Array const* arr, TYPE n)\
-{\
-    for (size_t i=0; i<arr->size; i++)\
-    {\
-        if (NAME##_compare(&(arr->data[i]), &n))\
-        {\
-            return true;\
-        }\
-    }\
-\
-    return false;\
-}
-
 char* readInput(const char* path)
 {
     FILE* f = fopen(path, "r");
