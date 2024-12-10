@@ -70,7 +70,10 @@ uint64_t calc(char* const* field, size_t width, size_t height, bool part2)
         {
             if (field[i][j] == '0')
             {
-                memset(memory, 0, width*height*sizeof(char));
+                if (!part2)
+                {
+                    memset(memory, 0, width*height*sizeof(char));
+                }
                 result += dfs(field, width, height, memory, j, i, part2);
             }
         }
