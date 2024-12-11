@@ -91,3 +91,6 @@ int llsign(long long a);
 DECLARE_ARRAY(Int, int)
 DECLARE_ARRAY(UInt64, uint64_t)
 DECLARE_ARRAY(Pos2DInt, Pos2DInt)
+
+uint64_t log_int(uint64_t n, uint64_t base);
+uint64_t pow_int(uint64_t n, uint64_t exponent);

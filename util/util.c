@@ -148,3 +148,39 @@ static inline bool Pos2DInt_compare(Pos2DInt const* a, Pos2DInt const* b)
 DEFINE_ARRAY(Int, int)
 DEFINE_ARRAY(UInt64, uint64_t)
 DEFINE_ARRAY(Pos2DInt, Pos2DInt)
+
+uint64_t log_int(uint64_t n, uint64_t base)
+{
+    if (n < base)
+    {
+        return 0;
+    }
+
+    // not efficient but whatever
+    uint64_t exp = 1;
+    uint64_t threshold = base;
+
+    while(n >= threshold)
+    {
+        exp++;
+        threshold *= base;
+    }
+
+    return exp - 1;
+}
+
+uint64_t pow_int(uint64_t n, uint64_t exponent)
+{
+    if (exponent == 0)
+    {
+        return 1;
+    }
+
+    uint64_t result = 1;
+    for(size_t i=0; i<exponent; i++)
+    {
+        result *= n;
+    }
+
+    return result;
+}
