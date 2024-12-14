@@ -110,34 +110,42 @@ void draw_field(struct Robot* robots, size_t num)
     free(picture);
 }
 
-uint64_t num_total_neighbors(struct Robot* robots, size_t num)
+double calc_variance(struct Robot* robots, size_t num)
 {
-    uint64_t result = 0;
+    uint64_t sum_x = 0;
+    uint64_t sum_y = 0;
+
     for(size_t i = 0; i<num; i++)
     {
-        for(size_t j=i; j<num; j++)
-        {
-            if (llabs(robots[i].x - robots[j].x) == 1 && llabs(robots[i].y - robots[j].y == 1))
-            {
-                result++;
-            }
-        }
+        sum_x += robots[i].x;
+        sum_y += robots[i].y;
     }
 
-    return result;
+    const double mean_x = (double)sum_x/num;
+    const double mean_y = (double)sum_y/num;
+
+    double var = 0.0;
+
+    for (size_t i=0; i<num; i++)
+    {
+        var += (mean_x - robots[i].x + mean_y - robots[i].y)*(mean_x - robots[i].x + mean_y - robots[i].y);
+    }
+
+    var /= 2*num;
+
+    return var;
 }
 
 void part2(char** lines, size_t num_lines)
 {
     struct Robot* robots = parse_robots(lines, num_lines);
 
-    for(size_t j=0; j<100000; j++)
+    for(size_t j=0; j<101*103; j++)
     {
-        uint64_t num_neighbors = num_total_neighbors(robots, num_lines);
-        //printf("neighbors: %llu\n", num_neighbors);
-        if (num_neighbors > 100)
+        double variance = calc_variance(robots, num_lines);
+        if (variance < 500)
         {
-            printf("neighbors: %llu\n", num_neighbors);
+            printf("variance: %f\n", variance);
             printf("Seconds: %llu\n", j);
             draw_field(robots, num_lines);
         }
