@@ -94,3 +94,5 @@ DECLARE_ARRAY(Pos2DInt, Pos2DInt)
 
 uint64_t log_int(uint64_t n, uint64_t base);
 uint64_t pow_int(uint64_t n, uint64_t exponent);
+
+char* to_2d_array(char const* input, size_t* width, size_t* height);

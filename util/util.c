@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "util.h"
 
@@ -183,4 +184,39 @@ uint64_t pow_int(uint64_t n, uint64_t exponent)
     }
 
     return result;
+}
+
+char* to_2d_array(char const* input, size_t* width, size_t* height)
+{
+    *width = 0;
+    *height = 1;
+
+    char* arr = malloc(sizeof(char)*strlen(input));
+    char* cur = arr;
+
+    while (*input != 0)
+    {
+        if (*input == '\r')
+        {
+            input++;
+            continue;
+        }
+        if (*input == '\n')
+        {
+            input++;
+            (*height)++;
+            continue;   
+        }
+
+        if (*height == 1)
+        {
+            (*width)++;
+        }
+
+        *cur = *input;
+        cur++;
+        input++;
+    }
+
+    return realloc(arr, sizeof(char)*(*width)*(*height));   
 }

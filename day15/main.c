@@ -489,7 +489,6 @@ uint64_t part2(struct Data data)
 int main()
 {
     clock_t start = clock();
-
     char* input = readInput("../day15/sample.txt");
     char* input2 = readInput("../day15/input.txt");
 
